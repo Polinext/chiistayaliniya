@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Производство | Soda</title>
+<meta name="description" content="Как производится мороженое Чистая линия — видео с фабрики.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+<style>
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --text-color: #ffffff;
+    --muted-color: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Inter', sans-serif;
+    --font-heading: 'Galada', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0508;
+    color: var(--text-color);
+    font-family: var(--font-main);
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 2rem 4%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.brand-logo {
+    grid-column: 1;
+    justify-self: start;
+    width: 92px;
+    height: auto;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+}
+
+.nav {
+    grid-column: 2;
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 0.4rem;
+    border-radius: 100px;
+}
+
+.nav-item {
+    font-family: 'Manrope', sans-serif;
+    color: var(--muted-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #cfe8fb;
+    color: #011d17;
+}
+
+.contact-btn {
+    grid-column: 3;
+    justify-self: end;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Pinned scroll-scrub video hero (Apple-style) */
+.video-hero {
+    position: relative;
+    height: 300vh;
+}
+
+.video-hero-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+}
+
+.video-hero-content.is-pinned {
+    opacity: 1;
+    visibility: visible;
+}
+
+.video-frame-16-9 {
+    position: relative;
+    width: 100%;
+    max-height: 100vh;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+.research-panel {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: min(420px, 38%);
+    background: rgba(59, 130, 246, 0.18);
+    border: 1px solid rgba(147, 197, 253, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: 20px;
+    padding: 2rem;
+    font-family: var(--font-main);
+    color: white;
+}
+
+.research-panel h2 {
+    font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.research-panel p {
+    font-size: clamp(0.85rem, 1.3vw, 1.05rem);
+    line-height: 1.6;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* The closing shot has the employee's face where the panel would normally
+   center, so drop this one lower to clear it. */
+#feedback-panel {
+    top: auto;
+    bottom: 6%;
+    transform: none;
+}
+
+/* Next section — fades in after the pinned hero releases */
+.next-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    text-align: center;
+    padding: 4rem 4%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.next-section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.next-section h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 400;
+}
+
+.next-section p {
+    color: var(--muted-color);
+    font-size: 1.1rem;
+    max-width: 560px;
+    line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+    <img class="brand-logo" src="logo чистая линия.svg" alt="Чистая линия">
+    <nav class="nav">
+        <a href="soda.html" class="nav-item">Каталог</a>
+        <a href="production.html" class="nav-item active">Производство</a>
+        <a href="#" class="nav-item">Рецепты</a>
+        <a href="#" class="nav-item">HoReCa</a>
+        <a href="#" class="nav-item">Контакты</a>
+    </nav>
+    <a href="soda.html" class="contact-btn">← Назад в каталог</a>
+</header>
+
+<section class="video-hero" id="video-hero">
+    <div class="video-hero-content" id="video-hero-content">
+        <div class="video-frame-16-9">
+            <video id="scrub-video" class="bg-video" muted playsinline preload="auto" disablepictureinpicture>
+                <source src="factory.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+            <div class="research-panel" id="research-panel">
+                <h2>Исследование</h2>
+                <p>
+                    При поступлении на производство все ингредиенты нашей продукции проходят серьезные
+                    лабораторные исследования на выявление соответствия нормам.
+                    Мы используем те же стандарты безопасности, что и контролирующие органы, поэтому
+                    на производство допускаем продукты исключительно высшего класса.
+                </p>
+            </div>
+            <div class="research-panel" id="control-panel">
+                <h2>Текущий контроль</h2>
+                <p>
+                    Мы следим за соблюдением качества продукции на всех этапах производства для того,
+                    чтобы убедиться в безопасности реализации каждого шага и вовремя выявить нарушения.
+                </p>
+            </div>
+            <div class="research-panel" id="check-panel">
+                <h2>Проверка</h2>
+                <p>
+                    По завершении производства продукция оказывается на итоговой проверке, где мы,
+                    а также независимые эксперты оцениваем состав и безопасность продукта. Мы возвращаем
+                    на доработку или отправляем на утилизацию все, что не соответствует стандартам безопасности.
+                </p>
+            </div>
+            <div class="research-panel" id="feedback-panel">
+                <h2>Контроль</h2>
+                <p>
+                    Сотрудники нашей компании ежедневно внимательно следят за отзывами и мнением покупателей,
+                    для того чтобы быть уверенными, что продукция компании «Чистая Линия» не только
+                    соответствует всем требованиям безопасности, но и отвечает предпочтениям наших клиентов.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="next-section" id="next-section">
+    <h2>От пломбира до упаковки</h2>
+    <p>
+        Каждая партия проходит контроль качества на всех этапах — от подбора ингредиентов
+        до финальной проверки перед отправкой в магазины.
+    </p>
+</section>
+
+<script>
+const scrubVideo = document.getElementById('scrub-video');
+const videoHero = document.getElementById('video-hero');
+const videoHeroContent = document.getElementById('video-hero-content');
+const nextSection = document.getElementById('next-section');
+const researchPanel = document.getElementById('research-panel');
+const controlPanel = document.getElementById('control-panel');
+const checkPanel = document.getElementById('check-panel');
+const feedbackPanel = document.getElementById('feedback-panel');
+
+// Fades a side panel in/out based on the video's current time. Pass null for
+// fadeInStart/fadeInEnd to have the panel start already fully visible.
+function setPanelOpacityAtTime(panel, t, { fadeInStart, fadeInEnd, fadeOutStart, fadeOutEnd }) {
+    let opacity = 1;
+    if (fadeInStart !== null && t <= fadeInStart) {
+        opacity = 0;
+    } else if (fadeInStart !== null && t < fadeInEnd) {
+        opacity = (t - fadeInStart) / (fadeInEnd - fadeInStart);
+    } else if (t >= fadeOutEnd) {
+        opacity = 0;
+    } else if (t > fadeOutStart) {
+        opacity = 1 - (t - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+    }
+    panel.style.opacity = opacity;
+    panel.style.pointerEvents = opacity > 0.05 ? 'auto' : 'none';
+}
+
+// "Исследование" only makes sense over the opening wide shot of the
+// researcher at the microscope — visible from the start, fades out as the
+// video pushes in to the close-up (around 1.4s–2.1s into the clip).
+// "Текущий контроль" covers the cone-filling line shot, fading in as that
+// shot starts (~2.8s–3.2s) and out as the camera pushes into it (~4.6s–5.2s).
+// "Проверка" covers the team-at-the-table shot, fading in as that shot
+// starts (~6.1s–6.5s) and out as the camera pushes into the close-up
+// (~8.4s–8.8s).
+// "Контроль" covers the closing shot of the employee at her desk — it fades
+// in as that shot starts (~8.9s–9.3s) and then stays visible through the end
+// of the clip (there's no further scene to reveal).
+function updatePanels() {
+    const t = scrubVideo.duration ? displayProgress * scrubVideo.duration : 0;
+    setPanelOpacityAtTime(researchPanel, t, { fadeInStart: null, fadeInEnd: null, fadeOutStart: 1.4, fadeOutEnd: 2.1 });
+    setPanelOpacityAtTime(controlPanel, t, { fadeInStart: 2.8, fadeInEnd: 3.2, fadeOutStart: 4.6, fadeOutEnd: 5.2 });
+    setPanelOpacityAtTime(checkPanel, t, { fadeInStart: 6.1, fadeInEnd: 6.5, fadeOutStart: 8.4, fadeOutEnd: 8.8 });
+    setPanelOpacityAtTime(feedbackPanel, t, { fadeInStart: 8.9, fadeInEnd: 9.3, fadeOutStart: 1000, fadeOutEnd: 1001 });
+}
+
+// Smooth scrubbing: poll scroll position every frame, but drive the video
+// off an eased/lerped value rather than the raw scroll position directly.
+// Real scrolling (trackpad/touch momentum, rubber-band bounce) keeps making
+// tiny back-and-forth adjustments for a moment even after the user "stops" —
+// following that raw signal 1:1 makes the video hop between nearby frames,
+// which reads as trembling. Easing toward it instead damps that noise out
+// while still tracking the real scroll trend smoothly.
+let rawProgress = 0;
+let displayProgress = 0;
+
+function computeProgress() {
+    const scrollableHeight = videoHero.offsetHeight - window.innerHeight;
+    const scrolled = Math.min(Math.max(-videoHero.getBoundingClientRect().top, 0), scrollableHeight);
+    return scrollableHeight > 0 ? scrolled / scrollableHeight : 0;
+}
+
+let lastSeekAttempt = 0;
+
+function requestSeek() {
+    if (!scrubVideo.duration) return;
+    const targetTime = displayProgress * scrubVideo.duration;
+    if (Math.abs(scrubVideo.currentTime - targetTime) < 0.04) return;
+    const now = performance.now();
+    // Ask the browser's own seeking state instead of tracking a custom flag —
+    // avoids any hesitate-then-jump lag from a flag going out of sync with
+    // what the decoder is actually doing. But if a seek never resolves (some
+    // browsers can get stuck mid-seek on this file), don't wait forever —
+    // after 500ms with no progress, force a fresh seek anyway so the video
+    // never permanently freezes while the scrub position keeps moving.
+    if (scrubVideo.seeking && now - lastSeekAttempt < 500) return;
+    lastSeekAttempt = now;
+    scrubVideo.currentTime = targetTime;
+}
+
+// iOS/Safari can fail to render seeked frames on a video that has never
+// played, even when muted. Prime the decoder with an instant play+pause
+// (imperceptible, stays on frame 0) so touch-driven scrubbing works reliably.
+scrubVideo.addEventListener('loadedmetadata', () => {
+    const primePromise = scrubVideo.play();
+    if (primePromise && typeof primePromise.then === 'function') {
+        primePromise.then(() => {
+            scrubVideo.pause();
+            requestSeek();
+        }).catch(() => { /* muted video, should always be allowed to prime */ });
+    }
+}, { once: true });
+
+function scrubLoop() {
+    rawProgress = computeProgress();
+    displayProgress += (rawProgress - displayProgress) * 0.15;
+    if (Math.abs(rawProgress - displayProgress) < 0.0004) {
+        displayProgress = rawProgress;
+    }
+    requestSeek();
+    updatePanels();
+    requestAnimationFrame(scrubLoop);
+}
+requestAnimationFrame(scrubLoop);
+
+// Pin the video while the hero section is in view, release it once scrolled past
+const heroObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        videoHeroContent.classList.toggle('is-pinned', entry.isIntersecting);
+    });
+}, { threshold: 0 });
+heroObserver.observe(videoHero);
+
+// Fade the next section in once it enters the viewport
+const nextSectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            nextSection.classList.add('is-visible');
+        }
+    });
+}, { threshold: 0.15 });
+nextSectionObserver.observe(nextSection);
+</script>
+
+</body>
+</html>

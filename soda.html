@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diet Soda | Pure Zero Refreshment</title>
+<meta name="description" content="Experience the crisp, clean taste of Diet Soda. Zero sugar, zero compromise.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Manrope:wght@400;700&family=Galada&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('inter/static/Inter_18pt-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+    --accent-color: #ffffff;
+    --muted-color: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --font-main: 'Inter', sans-serif;
+    --font-heading: 'Galada', cursive;
+
+    /* Dynamic Background Variables */
+    --bg-inner: #fff0f6;
+    --bg-mid: #f6a8c6;
+    --bg-outer: #7a1f4f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    overflow: hidden; /* Remove scroll */
+    height: 100vh;
+    transition: background 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.blue-theme {
+    --bg-inner: #0b4f8a;
+    --bg-mid: #04294e;
+    --bg-outer: #010c14;
+}
+
+/* Bubbles */
+#bubbles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bubble-img {
+    position: absolute;
+    pointer-events: none;
+}
+
+@keyframes floatUpImg {
+    0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% {
+        transform: translateY(-110vh) translateX(30px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Header */
+.header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 2rem 4%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.nav {
+    grid-column: 2;
+    display: flex;
+    gap: 0.5rem;
+    background: var(--glass-bg);
+    padding: 0.4rem;
+    border-radius: 100px;
+    border: 1px solid var(--glass-border);
+}
+
+.nav.glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.nav-item {
+    font-family: 'Manrope', sans-serif;
+    color: var(--muted-color);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #cfe8fb;
+    color: #011d17;
+}
+
+.contact-btn {
+    grid-column: 3;
+    justify-self: end;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.contact-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+
+/* Hero */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4%;
+    padding-top: 5rem;
+}
+
+.hero-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    height: 100%;
+    position: relative;
+}
+
+.side-title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.flavor-name {
+    font-family: var(--font-main);
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    line-height: 1.05;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+}
+
+.flavor-subtitle {
+    font-family: var(--font-main);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--muted-color);
+}
+
+.brand-logo {
+    width: 220px;
+    height: auto;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.25));
+}
+
+/* Leaves */
+.leaves-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    transition: transform 0.1s ease-out;
+}
+
+.leaf {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    z-index: -1;
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
+}
+
+.l1 { top: 10%; left: 15%; }
+.l2 { top: 40%; left: 80%; width: 140px; height: 140px; opacity: 0.4; }
+.l3 { top: 70%; left: 75%; width: 80px; height: 80px; }
+.l4 { top: 85%; left: 20%; width: 120px; height: 120px; opacity: 0.3; }
+
+/* Left column */
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 6rem 0;
+    gap: 2rem;
+    z-index: 100;
+}
+
+@keyframes fadeInEntry {
+    to { opacity: 1; transform: none; }
+}
+
+.description {
+    color: var(--muted-color);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    max-width: 400px;
+}
+
+.primary-btn {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.4rem 0.4rem 0.4rem 1.5rem;
+    border-radius: 100px;
+    font-weight: 700;
+    cursor: pointer;
+    width: fit-content;
+    transition: all 0.3s ease;
+    box-shadow: none;
+}
+
+.primary-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: translateY(-3px);
+    box-shadow: none;
+}
+
+.plus-icon {
+    background: #cfe8fb;
+    color: #011d17;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1;
+    padding-bottom: 2px;
+    border: none;
+}
+
+.nutrition-badge {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    gap: 0.3rem 1.5rem;
+    margin-top: auto;
+    width: fit-content;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 0.9rem 1.25rem;
+    backdrop-filter: blur(10px);
+}
+
+.nutrition-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted-color);
+    white-space: nowrap;
+}
+
+.nutrition-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Berries containers */
+.berries-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.1s ease-out;
+}
+
+.berries-container-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.1s ease-out;
+}
+
+.berry {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    outline: none;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.berry.no-animation { animation: none !important; }
+
+.b1 { top: 25%; left: 30%; width: 220px; height: 220px; }
+.b2 { top: 60%; left: 42%; width: 100px; height: 100px; }
+.b3 { top: 30%; left: 62%; width: 250px; height: 250px; }
+.b4 { top: 15%; left: 48%; width: 140px; height: 140px; }
+.b5 { top: 75%; left: 20%; width: 120px; height: 120px; }
+.b6 { top: 45%; left: 75%; width: 180px; height: 180px; }
+.b7 { top: 15%; left: 40%; width: 80px; height: 80px; opacity: 0.7; }
+.b8 { top: 50%; left: 55%; width: 70px; height: 70px; opacity: 0.6; }
+.b9 { top: 80%; left: 35%; width: 75px; height: 75px; opacity: 0.7; }
+
+/* Center product */
+.hero-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.3s forwards, float 6s ease-in-out infinite;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.main-product-3d {
+    width: 80vw;
+    height: 80vh;
+    max-width: 700px;
+    max-height: 700px;
+    object-fit: contain;
+    outline: none;
+    z-index: 1;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(25deg);
+    pointer-events: none;
+}
+
+/* Right column */
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    text-align: right;
+    height: 100%;
+    padding: 3rem 0;
+    z-index: 100;
+    width: 450px;
+    pointer-events: none;
+}
+
+@keyframes fadeInLeft {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.product-carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-end;
+    pointer-events: auto;
+}
+
+.carousel-viewport {
+    width: 135px;
+    overflow-x: visible;
+    overflow-y: hidden;
+}
+
+.carousel-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+.card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    width: 135px;
+    height: 170px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.card.active {
+    border-color: #cfe8fb;
+    border-width: 1px;
+    background: var(--glass-bg);
+    box-shadow: none;
+}
+
+.card img {
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    display: block;
+    will-change: transform;
+    pointer-events: none;
+}
+
+.card:hover img {
+    transform: translateY(-6px) scale(1.08) !important;
+}
+
+.card-info {
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+.nav-arrow {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    transition: background 0.3s, opacity 0.3s;
+}
+
+.nav-arrow:hover { background: rgba(255, 255, 255, 0.1); }
+
+.nav-arrow.disabled { opacity: 0.3; pointer-events: none; }
+
+.side-title { align-self: flex-end; text-align: right; }
+
+@keyframes shine {
+    from { transform: translateX(-100%) rotate(45deg); }
+    to { transform: translateX(200%) rotate(45deg); }
+}
+
+@media (max-width: 1200px) {
+    .main-product-3d { width: 100vw; height: 60vh; top: 40%; }
+    .hero-content { grid-template-columns: 1fr; padding-top: 8rem; }
+    .hero-center { order: -1; }
+    .flavor-name { font-size: 2rem; }
+    .hero-right { align-items: center; text-align: center; }
+    .side-title { align-self: center; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<div id="bubbles-container"></div>
+
+<header class="header">
+    <nav class="nav glass">
+        <a href="#" class="nav-item active">Каталог</a>
+        <a href="production.html" class="nav-item">Производство</a>
+        <a href="#" class="nav-item">Рецепты</a>
+        <a href="#" class="nav-item">HoReCa</a>
+        <a href="#" class="nav-item">Контакты</a>
+    </nav>
+    <button class="contact-btn">Contact Us</button>
+</header>
+
+<main class="hero">
+    <div class="hero-content">
+
+        <div class="leaves-container">
+            <model-viewer class="leaf l1" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="45deg 75deg 105%"></model-viewer>
+            <model-viewer class="leaf l2" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="-30deg 60deg 105%"></model-viewer>
+            <model-viewer class="leaf l3" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="120deg 85deg 105%"></model-viewer>
+            <model-viewer class="leaf l4" src="https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/leaves.glb" environment-image="neutral" exposure="1.0" interaction-prompt="none" camera-orbit="10deg 45deg 105%"></model-viewer>
+        </div>
+
+        <div class="hero-left">
+            <img class="brand-logo" src="logo чистая линия.svg" alt="Чистая линия">
+            <p class="description" id="flavor-description">
+                Мороженое «Спиролло» в малиновой глазури — новая форма трендового холодного десерта с рисовыми шариками. Спираль из нежного классического пломбира покрыта хрустящим слоем из сочной ягоды — получается неповторимая игра текстур и вкусов. Попробуйте уникальную новинку уже сейчас!
+            </p>
+            <div class="cta-group">
+                <button class="primary-btn">
+                    Добавить в корзину
+                    <span class="plus-icon">+</span>
+                </button>
+            </div>
+            <div class="nutrition-badge" id="nutrition-badge">
+                <span class="nutrition-label">Белки</span>
+                <span class="nutrition-label">Жиры</span>
+                <span class="nutrition-label">Углеводы</span>
+                <span class="nutrition-label">Эн. ценность</span>
+                <span class="nutrition-value">4 / 100 г</span>
+                <span class="nutrition-value">21,2 / 100 г</span>
+                <span class="nutrition-value">26,5 / 100 г</span>
+                <span class="nutrition-value">310 ккал / 100 г</span>
+            </div>
+        </div>
+
+        <div class="berries-container-bg">
+            <img class="berry b7" src="pink.png" data-variant="b" alt="">
+            <img class="berry b8" src="yellow.png" data-variant="a" alt="">
+            <img class="berry b9" src="pink.png" data-variant="b" alt="">
+        </div>
+
+        <div class="hero-center">
+            <img id="product-image" src="eskimo.png" alt="Diet Soda" class="main-product-3d">
+        </div>
+
+        <div class="berries-container">
+            <img class="berry b1" src="yellow.png" data-variant="a" alt="">
+            <img class="berry b2" src="pink.png" data-variant="b" alt="">
+            <img class="berry b3" src="yellow.png" data-variant="a" alt="">
+            <img class="berry b4" src="pink.png" data-variant="b" alt="">
+            <img class="berry b5" src="yellow.png" data-variant="a" alt="">
+            <img class="berry b6" src="pink.png" data-variant="b" alt="">
+        </div>
+
+        <div class="hero-right">
+            <div class="product-carousel">
+                <button class="nav-arrow nav-up disabled">↑</button>
+                <div class="carousel-viewport">
+                    <div class="carousel-cards">
+                        <div class="card active" data-flavor="classic">
+                            <img src="eskimo.png" alt="Diet Classic">
+                            <div class="card-info">
+                                <span>Diet Classic</span>
+                            </div>
+                        </div>
+                        <div class="card" data-flavor="blue">
+                            <img src="eskimo2.png" alt="Zero Lime" style="filter: brightness(1.15);">
+                            <div class="card-info">
+                                <span>Zero Lime</span>
+                            </div>
+                        </div>
+                        <div class="card" data-flavor="cactus">
+                            <img src="kaktus.png" alt="Cactus Twist">
+                            <div class="card-info">
+                                <span>Cactus Twist</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow nav-down">↓</button>
+            </div>
+            <h2 class="side-title large-animation-1">
+                <span class="flavor-name">Спиролло</span>
+                <span class="flavor-subtitle">с рисовыми шариками в малиновой глазури</span>
+            </h2>
+        </div>
+
+    </div>
+</main>
+
+<svg style="position: absolute; width: 0; height: 0; opacity: 0; pointer-events: none;">
+    <filter id="frosted">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0125" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="80" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+</svg>
+
+<script>
+const productImage = document.querySelector('#product-image');
+const berriesFG = document.querySelector('.berries-container');
+const berriesBG = document.querySelector('.berries-container-bg');
+const leavesBG = document.querySelector('.leaves-container');
+const allBerries = document.querySelectorAll('.berry');
+const cards = document.querySelectorAll('.card');
+let isSwitching = false;
+let switchSpin = 0;
+
+const FLAVORS = {
+    classic: {
+        colors: { inner: '#fff0f6', mid: '#f6a8c6', outer: '#7a1f4f' },
+        productImage: 'eskimo.png',
+        berries: { a: 'yellow.png', b: 'pink.png' },
+        title: 'Спиролло',
+        subtitle: 'с рисовыми шариками в малиновой глазури',
+        description: 'Мороженое «Спиролло» в малиновой глазури — новая форма трендового холодного десерта с рисовыми шариками. Спираль из нежного классического пломбира покрыта хрустящим слоем из сочной ягоды — получается неповторимая игра текстур и вкусов. Попробуйте уникальную новинку уже сейчас!',
+        nutrition: [
+            { label: 'Белки', value: '4 / 100 г' },
+            { label: 'Жиры', value: '21,2 / 100 г' },
+            { label: 'Углеводы', value: '26,5 / 100 г' },
+            { label: 'Эн. ценность', value: '310 ккал / 100 г' }
+        ]
+    },
+    blue: {
+        colors: { inner: '#0b4f8a', mid: '#04294e', outer: '#010c14' },
+        productImage: 'eskimo2.png',
+        berries: { a: 'green.png', b: 'blue.png' },
+        title: 'Сахарная трубочка 6-7',
+        subtitle: 'с рисовыми шариками',
+        description: '<strong>Теперь «сикс-севен» можно съесть!</strong><br><br>Сикс-севен, сикс-севен, сикс-севен — сахарная трубочка уже у тебя в руке. Внутри нежный пломбир и хрустящие рисовые шарики, снаружи — глазурь с цитрусовой кислинкой. Берёшь, смеёшься, ешь. Логику оставь дома.',
+        nutrition: [
+            { label: 'Белки', value: '4,70 г / 100 г' },
+            { label: 'Жиры', value: '15,80 г / 100 г' },
+            { label: 'Углеводы', value: '33,90 г / 100 г' },
+            { label: 'Эн. ценность', value: '300,00 ккал / 100 г' },
+            { label: 'Вес', value: '70 г' }
+        ]
+    },
+    cactus: {
+        colors: { inner: '#f5fdf3', mid: '#8fd694', outer: '#1f4d2c' },
+        productImage: 'kaktus.png',
+        berries: { a: 'pekan.png', b: 'caramel.png' },
+        title: 'Кактус пралине',
+        subtitle: 'в шоколадной глазури',
+        description: 'Любимое мороженое «Пралине» теперь в новом формате! Попробуйте изысканное сочетание ванильного пломбира, нежной сливочной карамели и карамелизованного ореха пекан! Эскимо «Весёлый Кактус Пралине» — яркое сочетание любимых вкусов!',
+        nutrition: [
+            { label: 'Белки', value: '4,2 / 100 г' },
+            { label: 'Жиры', value: '23,7 / 100 г' },
+            { label: 'Углеводы', value: '26,8 / 100 г' },
+            { label: 'Эн. ценность', value: '340 ккал / 100 г' }
+        ]
+    }
+};
+
+const flavorNameEl = document.querySelector('.flavor-name');
+const flavorSubtitleEl = document.querySelector('.flavor-subtitle');
+const flavorDescriptionEl = document.querySelector('#flavor-description');
+const nutritionBadgeEl = document.querySelector('#nutrition-badge');
+
+function renderNutrition(items) {
+    nutritionBadgeEl.style.gridTemplateColumns = `repeat(${items.length}, auto)`;
+    nutritionBadgeEl.innerHTML =
+        items.map(item => `<span class="nutrition-label">${item.label}</span>`).join('') +
+        items.map(item => `<span class="nutrition-value">${item.value}</span>`).join('');
+}
+
+cards.forEach(card => {
+    card.addEventListener('click', () => {
+        if (isSwitching) return;
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        const flavor = card.dataset.flavor;
+        switchFlavor(flavor);
+    });
+});
+
+// Carousel paging (2 cards visible at a time, scrolls vertically)
+const carouselViewport = document.querySelector('.carousel-viewport');
+const carouselCards = document.querySelector('.carousel-cards');
+const carouselCardEls = document.querySelectorAll('.carousel-cards .card');
+const navUp = document.querySelector('.nav-up');
+const navDown = document.querySelector('.nav-down');
+const VISIBLE_CARDS = 2;
+let carouselIndex = 0;
+
+function carouselStep() {
+    const gap = parseFloat(getComputedStyle(carouselCards).rowGap) || 0;
+    return carouselCardEls[0].offsetHeight + gap;
+}
+
+function layoutCarousel() {
+    const step = carouselStep();
+    carouselViewport.style.height = `${step * VISIBLE_CARDS - (parseFloat(getComputedStyle(carouselCards).rowGap) || 0)}px`;
+    updateCarouselNav();
+}
+
+function updateCarouselNav() {
+    navUp.classList.toggle('disabled', carouselIndex === 0);
+    navDown.classList.toggle('disabled', carouselIndex >= carouselCardEls.length - VISIBLE_CARDS);
+}
+
+function goToCarouselIndex(index) {
+    carouselIndex = Math.max(0, Math.min(index, carouselCardEls.length - VISIBLE_CARDS));
+    gsap.to(carouselCards, { y: -carouselIndex * carouselStep(), duration: 0.6, ease: 'power2.out' });
+    updateCarouselNav();
+}
+
+navUp.addEventListener('click', () => goToCarouselIndex(carouselIndex - 1));
+navDown.addEventListener('click', () => goToCarouselIndex(carouselIndex + 1));
+window.addEventListener('load', layoutCarousel);
+
+async function switchFlavor(flavor) {
+    if (isSwitching) return;
+    isSwitching = true;
+    const body = document.body;
+    const berries = document.querySelectorAll('.berry');
+    const heroCenter = document.querySelector('.hero-center');
+
+    // 1. Background Animation
+    const targetColors = FLAVORS[flavor].colors;
+
+    gsap.to(body, {
+        '--bg-inner': targetColors.inner,
+        '--bg-mid': targetColors.mid,
+        '--bg-outer': targetColors.outer,
+        duration: 1.5,
+        ease: 'power2.inOut'
+    });
+
+    // 2. Can Spin Animation (Simple 360 spin + blur with back settle)
+    const spinObj = { val: 0, blur: 0 };
+    gsap.to(spinObj, {
+        val: 360,
+        blur: 15,
+        duration: 0.6,
+        ease: "power2.in",
+        onUpdate: () => {
+            switchSpin = spinObj.val;
+            productImage.style.filter = `blur(${spinObj.blur}px)`;
+        },
+        onComplete: async () => {
+            // SWAP at peak
+            body.classList.toggle('blue-theme', flavor === 'blue');
+            productImage.src = FLAVORS[flavor].productImage;
+            flavorNameEl.textContent = FLAVORS[flavor].title;
+            flavorSubtitleEl.textContent = FLAVORS[flavor].subtitle;
+            flavorDescriptionEl.innerHTML = FLAVORS[flavor].description;
+            renderNutrition(FLAVORS[flavor].nutrition);
+
+            gsap.to(spinObj, {
+                val: 720,
+                blur: 0,
+                duration: 1.5,
+                ease: "back.out(0.7)",
+                onUpdate: () => {
+                    switchSpin = spinObj.val;
+                    productImage.style.filter = `blur(${spinObj.blur}px)`;
+                },
+                onComplete: () => {
+                    switchSpin = 0;
+                    productImage.style.filter = 'none';
+                }
+            });
+        }
+    });
+
+    // 3. Berries "Hide & Reveal" with Dynamic Positioning
+    let completedBerries = 0;
+    berries.forEach((berry, i) => {
+        const bW = berry.offsetWidth / 2;
+        const bH = berry.offsetHeight / 2;
+        const centerX = (window.innerWidth / 2 - berry.offsetLeft - bW);
+        const centerY = (window.innerHeight / 2 - berry.offsetTop - bH);
+
+        const startAngle = parseFloat(berry.dataset.angle) || 0;
+        const currentBaseX = parseFloat(berry.dataset.baseX) || 0;
+        const currentBaseY = parseFloat(berry.dataset.baseY) || 0;
+
+        // New random target position - Increased range for visibility
+        const nextBaseX = (Math.random() - 0.5) * 200;
+        const nextBaseY = (Math.random() - 0.5) * 200;
+
+        gsap.set(berry, {
+            rotation: startAngle,
+            x: currentBaseX,
+            y: currentBaseY
+        });
+
+        const berryTl = gsap.timeline();
+
+        berryTl.to(berry, {
+            x: centerX,
+            y: centerY,
+            rotation: startAngle + 45,
+            scale: 0.1,
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.in",
+            onComplete: () => {
+                berry.src = FLAVORS[flavor].berries[berry.dataset.variant];
+                heroCenter.style.zIndex = 50;
+            }
+        })
+        .to(berry, {
+            duration: 0.3
+        })
+        .to(berry, {
+            onStart: () => {
+                heroCenter.style.zIndex = 1;
+            },
+            x: nextBaseX,
+            y: nextBaseY,
+            rotation: startAngle + 90,
+            scale: 1,
+            opacity: 1,
+            duration: 0.9,
+            ease: "back.out(1.5)",
+            onComplete: () => {
+                berry.dataset.angle = startAngle + 90;
+                berry.dataset.baseX = nextBaseX;
+                berry.dataset.baseY = nextBaseY;
+                berry.dataset.rx = 0;
+                berry.dataset.ry = 0;
+
+                completedBerries++;
+                if (completedBerries === berries.length) {
+                    isSwitching = false;
+                }
+            }
+        });
+    });
+}
+
+
+// Track berry states for smoothing
+allBerries.forEach(b => {
+    b.dataset.rx = 0; b.dataset.ry = 0; b.dataset.angle = Math.random() * 360;
+    b.dataset.baseX = 0; b.dataset.baseY = 0;
+    b.dataset.targetRx = 0; b.dataset.targetRy = 0;
+});
+
+let mouse = { x: 0, y: 0, px: 0, py: 0 };
+let currentMouse = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / window.innerWidth) - 0.5;
+    mouse.y = (e.clientY / window.innerHeight) - 0.5;
+    mouse.px = e.clientX;
+    mouse.py = e.clientY;
+});
+
+function animate() {
+    const time = Date.now() * 0.001;
+    // Target camera position based on mouse
+    // Smoothly interpolate current mouse to target mouse
+    currentMouse.x += (mouse.x - currentMouse.x) * 0.05;
+    currentMouse.y += (mouse.y - currentMouse.y) * 0.05;
+
+    // Tilt the product image toward the cursor + add switch spin
+    productImage.style.transform = `translate(-50%, -50%) perspective(1200px) rotateY(${(currentMouse.x * 40) + switchSpin}deg) rotateX(${-(currentMouse.y * 20)}deg) rotate(25deg)`;
+
+    // Update parallax containers - Always
+    berriesFG.style.transform = `translate(${currentMouse.x * 60}px, ${currentMouse.y * 60}px)`;
+    berriesBG.style.transform = `translate(${currentMouse.x * -30}px, ${currentMouse.y * -30}px)`;
+    leavesBG.style.transform = `translate(${currentMouse.x * -15}px, ${currentMouse.y * -15}px)`;
+
+    // Update each berry with its own smoothing and float - ONLY IF NOT SWITCHING
+    if (!isSwitching) {
+        allBerries.forEach((berry, i) => {
+            const berryRect = berry.getBoundingClientRect();
+            const berryX = berryRect.left + berryRect.width / 2;
+            const berryY = berryRect.top + berryRect.height / 2;
+
+            const diffX = mouse.px - berryX;
+            const diffY = mouse.py - berryY;
+            const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+            let targetRx = 0, targetRy = 0, speedMult = 1;
+
+            if (distance < 400) {
+                const force = (400 - distance) / 400;
+                targetRx = (diffX / distance) * force * -80;
+                targetRy = (diffY / distance) * force * -80;
+                speedMult = 1 + force * 5;
+            }
+
+            // Lerp repulsion values
+            let rx = parseFloat(berry.dataset.rx) || 0;
+            let ry = parseFloat(berry.dataset.ry) || 0;
+            let angle = parseFloat(berry.dataset.angle) || 0;
+            let baseX = parseFloat(berry.dataset.baseX) || 0;
+            let baseY = parseFloat(berry.dataset.baseY) || 0;
+
+            rx += (targetRx - rx) * 0.1;
+            ry += (targetRy - ry) * 0.1;
+            angle += 0.2 * speedMult;
+
+            berry.dataset.rx = rx;
+            berry.dataset.ry = ry;
+            berry.dataset.angle = angle;
+
+            // Floating effect
+            const dur = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10][i % 9];
+            const phase = (time + i * 0.7) * (Math.PI * 2 / dur);
+            const floatY = Math.sin(phase) * 15;
+            const floatAngle = Math.cos(phase) * 6;
+
+            berry.style.transform = `translate(calc(${rx + baseX}px), calc(${ry + baseY}px + ${floatY}px)) rotate(calc(${angle}deg + ${floatAngle}deg))`;
+        });
+    }
+
+    // Update leaves with float - ALWAYS
+    document.querySelectorAll('.leaf').forEach((leaf, i) => {
+        const dur = 10 + i * 2;
+        const phase = (time + i * 1.2) * (Math.PI * 2 / dur);
+        const floatY = Math.sin(phase) * 20;
+        const floatX = Math.cos(phase * 0.5) * 15;
+        const floatAngle = Math.sin(phase * 0.3) * 15;
+        leaf.style.transform = `translate(${floatX}px, ${floatY}px) rotate(${floatAngle}deg)`;
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+
+// Bubbles Generator using bubble.png
+const bubblesContainer = document.getElementById('bubbles-container');
+function createBubble() {
+    if (!bubblesContainer) return;
+    const bubble = document.createElement('img');
+    bubble.src = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/soda-14ff8a788d/bubble.png';
+    bubble.className = 'bubble-img';
+    const size = Math.random() * 20 + 10 + 'px';
+    bubble.style.width = size;
+    bubble.style.height = 'auto';
+    bubble.style.left = Math.random() * 100 + '%';
+    bubble.style.bottom = '-50px';
+    bubble.style.opacity = Math.random() * 0.4 + 0.2;
+
+    const duration = Math.random() * 6 + 4;
+    bubble.style.animation = `floatUpImg ${duration}s linear forwards`;
+
+    bubblesContainer.appendChild(bubble);
+    setTimeout(() => bubble.remove(), duration * 1000);
+}
+setInterval(createBubble, 400);
+</script>
+
+</body>
+</html>
