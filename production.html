@@ -123,6 +123,24 @@ body {
     display: inline-block;
 }
 
+.menu-toggle {
+    display: none;
+    grid-column: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: white;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Pinned scroll-scrub video hero (Apple-style) */
 .video-hero {
     position: relative;
@@ -245,13 +263,101 @@ body {
     max-width: 560px;
     line-height: 1.6;
 }
+
+@media (max-width: 700px) {
+    /* Fill the screen exactly — no leftover strip top/bottom from the 9:16
+       box not matching the device's actual aspect ratio. */
+    .video-frame-16-9 { aspect-ratio: unset; width: 100%; height: 100%; max-height: none; }
+
+    .header {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1.75rem 5% 0;
+        background: none;
+    }
+    .brand-logo {
+        position: fixed;
+        top: 1.5rem;
+        left: 5%;
+        width: 64px;
+        margin-top: 0;
+        z-index: 1001;
+    }
+    .menu-toggle {
+        display: flex;
+        position: fixed;
+        top: 1.5rem;
+        right: 5%;
+        left: auto;
+        z-index: 1001;
+    }
+    .contact-btn { display: none; }
+
+    /* Nav collapses behind the ⋮ toggle — opens as a dropdown under it */
+    .nav {
+        position: absolute;
+        top: calc(100% + 0.6rem);
+        right: 5%;
+        left: auto;
+        max-width: 70vw;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.3rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        border-radius: 16px;
+        background: rgba(20, 10, 15, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+    .nav-item { border-radius: 10px; }
+    .nav.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+    .nav-item { font-size: 0.85rem; padding: 0.6rem 1rem; text-align: left; }
+
+    /* Side panels: full-width band anchored to the bottom, clear of faces
+       in every scene, instead of a narrow column pinned to the middle-right. */
+    .research-panel {
+        left: 5%;
+        right: 5%;
+        width: auto;
+        max-width: none;
+        box-sizing: border-box;
+        top: auto !important;
+        bottom: 6%;
+        transform: none !important;
+        padding: 1.25rem;
+    }
+    .research-panel h2 {
+        font-size: 1.2rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+    .research-panel p {
+        font-size: 0.85rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .next-section h2 { font-size: 2rem; }
+    .next-section p { font-size: 1rem; padding: 0 4%; }
+}
 </style>
 </head>
 <body>
 
 <header class="header">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Меню">⋮</button>
     <img class="brand-logo" src="logo чистая линия.svg" alt="Чистая линия">
-    <nav class="nav">
+    <nav class="nav" id="nav-menu">
         <a href="soda.html" class="nav-item">Каталог</a>
         <a href="production.html" class="nav-item active">Производство</a>
         <a href="#" class="nav-item">Рецепты</a>
@@ -313,6 +419,21 @@ body {
 </section>
 
 <script>
+// Mobile ⋮ toggle — opens/closes the nav dropdown
+const menuToggle = document.getElementById('menu-toggle');
+const navMenu = document.getElementById('nav-menu');
+if (menuToggle && navMenu) {
+    menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navMenu.classList.toggle('is-open');
+    });
+    document.addEventListener('click', (e) => {
+        if (!navMenu.contains(e.target) && e.target !== menuToggle) {
+            navMenu.classList.remove('is-open');
+        }
+    });
+}
+
 const scrubVideo = document.getElementById('scrub-video');
 const videoHero = document.getElementById('video-hero');
 const videoHeroContent = document.getElementById('video-hero-content');
