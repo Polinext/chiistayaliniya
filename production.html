@@ -477,6 +477,22 @@ function updatePanels() {
     setPanelOpacityAtTime(controlPanel, t, { fadeInStart: 2.8, fadeInEnd: 3.2, fadeOutStart: 4.6, fadeOutEnd: 5.2 });
     setPanelOpacityAtTime(checkPanel, t, { fadeInStart: 6.1, fadeInEnd: 6.5, fadeOutStart: 8.4, fadeOutEnd: 8.8 });
     setPanelOpacityAtTime(feedbackPanel, t, { fadeInStart: 8.9, fadeInEnd: 9.3, fadeOutStart: 1000, fadeOutEnd: 1001 });
+    updateVideoFraming(t);
+}
+
+// On mobile the full-bleed crop (object-fit: cover on a much taller-than-16:9
+// screen) only keeps a narrow center strip of the original frame — on the
+// cone-filling shot and the closing desk shot the person ends up mostly
+// outside that strip. Shift the crop left during just those two shots so
+// they stay in frame; every other shot keeps the default centered crop.
+function updateVideoFraming(t) {
+    if (!window.matchMedia('(max-width: 700px)').matches) {
+        scrubVideo.style.objectPosition = '';
+        return;
+    }
+    const inConeShot = t >= 2.6 && t <= 5.4;
+    const inDeskShot = t >= 8.7;
+    scrubVideo.style.objectPosition = (inConeShot || inDeskShot) ? '25% center' : '50% center';
 }
 
 // Smooth scrubbing: poll scroll position every frame, but drive the video
